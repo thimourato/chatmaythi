@@ -10,8 +10,13 @@ const firebaseConfig = {
 
 // Inicializar Firebase
 firebase.initializeApp(firebaseConfig);
+console.log("Firebase inicializado com sucesso");
+
 const db = firebase.firestore();
 const storage = firebase.storage();
+
+// Verificar se o script está carregado
+console.log("Script.js carregado");
 
 // Enviar mensagem de texto
 document.getElementById('send-button').addEventListener('click', function() {
@@ -24,6 +29,10 @@ document.getElementById('send-button').addEventListener('click', function() {
             user: userName,
             text: messageText,
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        }).then(() => {
+            console.log("Mensagem enviada com sucesso");
+        }).catch(error => {
+            console.error("Erro ao enviar mensagem: ", error);
         });
         messageInput.value = '';
     }
@@ -41,8 +50,14 @@ document.getElementById('file-input').addEventListener('change', function(event)
                     user: userName,
                     imageUrl: url,
                     timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                }).then(() => {
+                    console.log("Foto enviada com sucesso");
+                }).catch(error => {
+                    console.error("Erro ao enviar foto: ", error);
                 });
             });
+        }).catch(error => {
+            console.error("Erro ao fazer upload da foto: ", error);
         });
     }
 });
